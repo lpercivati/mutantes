@@ -38,21 +38,21 @@ public class MutantesService {
     }
 
     private void validar(String[] dna) {
-        var encontrado = false;
+        var valido = dna != null && dna.length > 0;
         var i = 0;
         var letrasAceptadas = "ATCG";
 
-        while(i < dna.length && !encontrado){
+        while(i < dna.length && valido){
             String palabra = dna[i];
             var otrasLetras = palabra.chars().mapToObj(c -> (char) c).filter(letra -> !letrasAceptadas.contains(letra.toString()));
 
-            if(otrasLetras.count() > 0){
-                encontrado = true;
+            if(otrasLetras.count() > 0 || dna[i].length() != dna.length){
+                valido = false;
             }
             i++;
         }
 
-        if(encontrado){
+        if(!valido){
           throw new IllegalArgumentException();
         }
     }
